@@ -1,0 +1,323 @@
+%Librerias
+:- use_module(library(pce)).
+:- use_module(library(pce_util)).
+:- pce_image_directory('./images').
+
+%Recursos
+resource(principal, image, image('principal.jpg')).
+resource(cesarea, image, image('cesarea.jpg')).
+resource(incision, image, image('incision.jpg')).
+resource(advertencia, image, image('advertencia.jpg')).
+resource(espera, image, image('espera.jpg')).
+
+%Respuestas posibles
+respuestaP1(no).
+respuestaP1(leve).
+respuestaP1(moderado).
+respuestaP1(bastante).
+respuestaP2(si).
+respuestaP2(no).
+
+%Preguntas de la primera parte
+preguntaP1('torpe_o_entumecido',X) :- respuesta(X).
+preguntaP1('acalorado',X) :- respuesta(X).
+preguntaP1('temblor_en_las_piernas',X) :- respuesta(X).
+preguntaP1('incapaz_de_relajarse',X) :- respuesta(X).
+preguntaP1('temor_a_que_ocurra_lo_peor',X) :- respuesta(X).
+preguntaP1('mareos',X) :- respuesta(X).
+preguntaP1('latidos_del_corazon_fuertes_o_acelerados',X) :- respuesta(X).
+preguntaP1('inestable',X) :- respuesta(X).
+preguntaP1('atemorizado_asustado',X) :- respuesta(X).
+preguntaP1('nervioso',X) :- respuesta(X).
+preguntaP1('sensacion de bloqueo',X) :- respuesta(X).
+preguntaP1('temblor_en_las_manos',X) :- respuesta(X).
+preguntaP1('inquieto_inseguro',X) :- respuesta(X).
+preguntaP1('miedo_a_perder_el_control',X) :- respuesta(X).
+preguntaP1('sensacion_de_ahogo',X) :- respuesta(X).
+preguntaP1('temor_a_morir',X) :- respuesta(X).
+preguntaP1('miedo',X) :- respuesta(X).
+preguntaP1('problemas_digestion',X) :- respuesta(X).
+preguntaP1('desvanecimientos',X) :- respuesta(X).
+preguntaP1('rubor_facial',X) :- respuesta(X).
+preguntaP1('sudores_frios_o_calientes',X) :- respuesta(X).
+
+%Ventana
+comenzar() :-
+    abrir_conexion,
+    new(Ventana, dialog('Sistema Experto Ansiedad')),
+    send(Ventana, size, size(700,680)),
+    send(Ventana, append, new(TxtTitulo, text('Sistema Experto para detectar el indice de ansiedad y si existe algun transtorno de ansiedad'))),
+    send(TxtTitulo, font, bold),
+    send(TxtTitulo, alignment, center),
+    send(TxtTitulo, colour, '#00299B'),
+    send(Ventana, append, new(TxtSubtitulo, text('Sistema experto que ayuda a los psicologos en definir si una persona tiene niveles graves de ansiedad y si por este puede desarrollar un transtorno.'))),
+    send(TxtSubtitulo, alignment, center),
+    send(Ventana, append, new(TxtEquipo, text('Equipo JAL.'))),
+    send(TxtEquipo, alignment, center),
+    send(TxtEquipo, colour, '#0042FB'),
+    send(TxtSubtitulo, alignment, center),
+    send(Ventana, append, new(TxtPaciente, text('Ingrese los datos del paciente'))),
+    send(TxtPaciente, alignment, center),
+    new(Nombre, text_item(nombre)),
+    new(Apellido, text_item(apellidos)),
+    send(Ventana, append, new(BtnDiagnostico, button(realizar_diagnostico, and(message(@prolog, diagnostico, Nombre?selection, Apellido?selection, Ventana))))),
+    send(Ventana, append, Nombre),
+    send(Ventana, append, Apellido),
+    new(Figura, figure),
+    new(Bitmap, bitmap(resource(principal), @on)),
+    send(Bitmap, name, 1),
+    send(Figura, display, Bitmap),
+    send(Figura, status, 1),
+    send(Ventana, display, Figura, point(150, 170)),
+    send(Ventana, append, new(TxtTInformacion, text('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
+    INFORMACION SOBRE LA ANSIEDAD.
+    \n\n\n\n\n\n
+    PROCEDIMIENTO'))),
+    send(TxtTInformacion, font, bold),
+    send(TxtTInformacion, alignment, center),
+    send(Ventana, append, new(TxtCInformacion, text('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
+    Aqui mucha informacion de la ansiedad ajua\n '))),
+    send(TxtCInformacion, alignment, center),
+    send(BtnDiagnostico, open),
+    send(Ventana,open).
+
+%Ventana diagnostico
+diagnostico(Nombre, Apellido, VentanaD) :-
+    ingresar_registro(Nombre, Apellido),
+    new(Ventana, dialog('Diagnostico indice de ansiedad')),
+    send(Ventana, size, size(700,680)),
+    send_list(Ventana, append, [
+        new(P1, menu(torpe_o_entumecido)),
+        new(P2, menu(acalorado)),
+        new(P3, menu(temblor_en_las_piernas)),
+        new(P4, menu(incapaz_de_relajarse)),
+        new(P5, menu(temor_a_que_ocurra_lo_peor)),
+        new(P6, menu(mareos)),
+        new(P7, menu(latidos_del_corazon_fuertes_o_acelerados)),
+        new(P8, menu(inestable)),
+        new(P9, menu(atemorizado_asustado)),
+        new(P10, menu(nervioso)),
+        new(P11, menu(sensacion_de_bloqueo)),
+        new(P12, menu(temblor_en_las_manos)),
+        new(P13, menu(inquieto_inseguro)),
+        new(P14, menu(miedo_a_perder_el_control)),
+        new(P15, menu(sensacion_de_ahogo)),
+        new(P16, menu(temor_a_morir)),
+        new(P17, menu(miedo)),
+        new(P18, menu(problemas_digestion)),
+        new(P19, menu(desvanecimientos)),
+        new(P20, menu(rubor_facial)),
+        new(P21, menu(sudores_frios_o_calientes))]),
+    send_list(P1, append, [no, leve, moderado, bastante]),
+    send_list(P2, append, [no, leve, moderado, bastante]),
+    send_list(P3, append, [no, leve, moderado, bastante]),
+    send_list(P4, append, [no, leve, moderado, bastante]),
+    send_list(P5, append, [no, leve, moderado, bastante]),
+    send_list(P6, append, [no, leve, moderado, bastante]),
+    send_list(P7, append, [no, leve, moderado, bastante]),
+    send_list(P8, append, [no, leve, moderado, bastante]),
+    send_list(P9, append, [no, leve, moderado, bastante]),
+    send_list(P10, append, [no, leve, moderado, bastante]),
+    send_list(P11, append, [no, leve, moderado, bastante]),
+    send_list(P12, append, [no, leve, moderado, bastante]),
+    send_list(P13, append, [no, leve, moderado, bastante]),
+    send_list(P14, append, [no, leve, moderado, bastante]),
+    send_list(P15, append, [no, leve, moderado, bastante]),
+    send_list(P16, append, [no, leve, moderado, bastante]),
+    send_list(P17, append, [no, leve, moderado, bastante]),
+    send_list(P18, append, [no, leve, moderado, bastante]),
+    send_list(P19, append, [no, leve, moderado, bastante]),
+    send_list(P20, append, [no, leve, moderado, bastante]),
+    send_list(P21, append, [no, leve, moderado, bastante]),
+    send(Ventana, append, new(BtnEnviar, button(resultados, and(message(@prolog, preguntas, P1?selection, P2?selection, P3?selection, P4?selection, P5?selection, P6?selection, P7?selection, P8?selection, P9?selection, P10?selection, P11?selection, P12?selection, P13?selection, P14?selection, P15?selection, P16?selection, P17?selection, P18?selection, P19?selection, P20?selection, P21?selection, Ventana))))),
+    send(BtnEnviar, open),
+    new(Figura, figure),
+    new(Bitmap, bitmap(resource(espera), @on)),
+    send(Bitmap, name, 1),
+    send(Figura, display, Bitmap),
+    send(Figura, status, 1),
+    send(Ventana, display, Figura, point(160, 360)),
+    send(VentanaD, destroy).
+
+%Ventana indice de ansiedad bajo
+indice_bajo(VentanaD) :-
+    new(Ventana, dialog('Indice de ansiedad')),
+    send(Ventana, size, size(370,350)),
+    send(Ventana, append, new(TxtCesarea, text('EL indice de anciedad es: '))),
+    send(TxtCesarea, font, bold),
+    send(TxtCesarea, alignment, center),
+    send(Ventana, append, new(TxtTipoCesarea, text('Bajo'))),
+    send(TxtTipoCesarea, font, bold),
+    send(TxtTipoCesarea, alignment, center),
+    send(TxtTipoCesarea, colour, '#0042FB'),
+    send(Ventana,append,new(BtnRegresar, button(regresar, and(message(@prolog, comenzar), and(message(@prolog, cerrar_advertencia, Ventana)))))),
+    send(BtnRegresar, open),
+    new(Figura, figure),
+    new(Bitmap, bitmap(resource(cesarea), @on)),
+    send(Bitmap, name, 1),
+    send(Figura, display, Bitmap),
+    send(Figura, status, 1),
+    send(Ventana, display, Figura, point(10, 140)),
+    send(Ventana, open),
+    send(VentanaD, destroy).
+
+
+%Ventana cesarea improvisada
+cesarea_improvista(VentanaD) :-
+    new(Ventana, dialog('Cesarea Improvisada')),
+    send(Ventana, size, size(370,350)),
+    send(Ventana, append, new(TxtCesarea, text('La cesarea recomendada es:'))),
+    send(TxtCesarea, font, bold),
+    send(TxtCesarea, alignment, center),
+    send(Ventana, append, new(TxtTipoCesarea, text('Cesarea Prevista'))),
+    send(TxtTipoCesarea, font, bold),
+    send(TxtTipoCesarea, alignment, center),
+    send(TxtTipoCesarea, colour, '#0042FB'),
+    send_list(Ventana, append, [new(P10, menu(incision_por_despredimiento_de_placenta)),
+    new(P11, menu(no_hay_desprendimiento_de_placenta))]),
+    send_list(P10, append, [si, no]),
+    send_list(P11, append, [si, no]),
+    send(Ventana,append,new(BtnTipoIncision, button(tipo_incision, and(message(@prolog, tipo_incision, P10?selection,P11?selection, Ventana))))),
+    new(Figura, figure),
+    new(Bitmap, bitmap(resource(cesarea), @on)),
+    send(Bitmap, name, 1),
+    send(Figura, display, Bitmap),
+    send(Figura, status, 1),
+    send(Ventana, display, Figura, point(10, 140)),
+    send(BtnTipoIncision, open),
+    send(Ventana, open),
+    send(VentanaD, destroy).
+
+%verificar tipo de incision
+tipo_incision(Y, Z, VentanaD):-
+    pregunta('incision_por_despredimiento_de_placenta',Y),Y='no',
+    pregunta('no_hay_desprendimiento_de_placenta',Z),Z='si',
+    incision_transversal(VentanaD);
+    pregunta('incision_por_despredimiento_de_placenta',Y),Y='si',
+    pregunta('no_hay_desprendimiento_de_placenta',Z),Z='no',
+    incision_umbilica(VentanaD);
+    sin_opcion().
+
+%ventana incision umbilical
+incision_umbilica(VentanaD) :-
+    new(Ventana, dialog('Tipo de Incision')),
+    send(Ventana, size, size(350,350)),
+    send(Ventana, append, text('La incision recomandada es:' )),
+    send(Ventana, append, new(TxtTipoIncision, text('Incision Umbilical Pubica.'))),
+    send(TxtTipoIncision, font, bold),
+    send(TxtTipoIncision, alignment, center),
+    send(TxtTipoIncision, colour, '#0042FB'),
+    send(Ventana, append, text('    -Es vertical.
+    -Empieza debajo del ombligo y termina en el pubis.
+    -La cicatriz es visible y grande.')),
+    send(Ventana,append,new(BtnRegresar, button(regresar, and(message(@prolog, comenzar), and(message(@prolog, cerrar_advertencia, Ventana)))))),
+    send(BtnRegresar, open),
+    new(Figura, figure),
+    new(Bitmap, bitmap(resource(incision), @on)),
+    send(Bitmap, name, 1),
+    send(Figura, display, Bitmap),
+    send(Figura, status, 1),
+    send(Ventana, display, Figura, point(50, 140)),
+    send(Ventana, open),
+    send(VentanaD, destroy).
+
+%ventana incision transversal
+incision_transversal(VentanaD) :-
+new(Ventana, dialog('Tipo de Incision')),
+    send(Ventana, size, size(350,350)),
+    send(Ventana, append, text('La incision recomandada es:' )),
+    send(Ventana, append, new(TxtTipoIncision, text('Incision Transversal Baja.'))),
+    send(TxtTipoIncision, font, bold),
+    send(TxtTipoIncision, alignment, center),
+    send(TxtTipoIncision, colour, '#0042FB'),
+    send(Ventana, append, text('    -Es horizontal.
+    -La cicatriz no es visible.')),
+    send(Ventana,append,new(BtnRegresar, button(regresar, and(message(@prolog, comenzar), and(message(@prolog, cerrar_advertencia, Ventana)))))),
+    send(BtnRegresar, open),
+    send(Ventana, open),
+    new(Figura, figure),
+    new(Bitmap, bitmap(resource(incision), @on)),
+    send(Bitmap, name, 1),
+    send(Figura, display, Bitmap),
+    send(Figura, status, 1),
+    send(Ventana, display, Figura, point(50, 140)),
+    send(VentanaD, destroy).
+
+%verificacion de preguntas
+preguntas(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, VentanaD):-
+    pregunta('el_bebe_esta_en_posicion_podalica',P1),P1='bajo',
+    preguntaP1('torpe_o_entumecido',P1),P1='bajo'
+    preguntaP1('acalorado',P1),P1='bajo'
+    preguntaP1('temblor_en_las_piernas',P1),P1='bajo'
+    preguntaP1('incapaz_de_relajarse',P1),P1='bajo'
+    preguntaP1('temor_a_que_ocurra_lo_peor',P1),P1='bajo'
+    preguntaP1('mareos',P1),P1='bajo'
+    preguntaP1('latidos_del_corazon_fuertes_o_acelerados',P1),P1='bajo'
+    preguntaP1('inestable',P1),P1='bajo'
+    preguntaP1('atemorizado_asustado',P1),P1='bajo'
+    preguntaP1('nervioso',P1),P1='bajo'
+    preguntaP1('sensacion de bloqueo',P1),P1='bajo'
+    preguntaP1('temblor_en_las_manos',P1),P1='bajo'
+    preguntaP1('inquieto_inseguro',P1),P1='bajo'
+    preguntaP1('miedo_a_perder_el_control',P1),P1='bajo'
+    preguntaP1('sensacion_de_ahogo',P1),P1='bajo'
+    preguntaP1('temor_a_morir',P1),P1='bajo'
+    preguntaP1('miedo',P1),P1='bajo'
+    preguntaP1('problemas_digestion',P1),P1='bajo'
+    preguntaP1('desvanecimientos',P1),P1='bajo'
+    preguntaP1('rubor_facial',P1),P1='bajo'
+    preguntaP1('sudores_frios_o_calientes',P1),P1='bajo'.
+    indice_bajo(VentanaD);
+    pregunta('el_bebe_esta_en_posicion_podalica',P1),P1='no',
+    pregunta('la_madre_padece_gestosis',P2),P2='no',
+    pregunta('la_madre_padece_diabetes_gravidica',P3),P3='no',
+    pregunta('la_placenta_esta_en_posicion_previa_central',P4),P4='no',
+    pregunta('la_madre_tiene_problemas_del_corazon',P5),P5='no',
+    pregunta('la_madre_tiene_problemas_renales',P6),P6='no',
+    pregunta('la_madre_tiene_problemas_graves_de_infecciones_de_vias_renales',P7),P7='no',
+    pregunta('la_cabeza_del_nino_es_demasiado_grande_y_no_cabe_por_el_canal_del_parto',P8),P8='si',
+    pregunta('la_cabeza_del_nino_no_esta_encajada_correctamente_en_el_canal_de_parto',P9),P9='si',
+    pregunta('el_ritmo_cardiaco_del_bebe_ya_no_es_regular',P10),P10='si',
+    pregunta('la_placenta_se_desprende',P11),P11='si',
+    cesarea_improvista(VentanaD);
+    sin_opcion().
+
+sin_opcion() :-
+    new(Ventana, dialog('Ansiedad')),
+    send(Ventana, size, size(230,190)),
+    send(Ventana, append, text('No se encontraron resultados')),
+    send(Ventana,append,new(BtnRegresar, button(regresar, and(message(@prolog, cerrar_advertencia, Ventana))))),
+    send(BtnRegresar, open),
+    new(Figura, figure),
+    new(Bitmap, bitmap(resource(advertencia), @on)),
+    send(Bitmap, name, 1),
+    send(Figura, display, Bitmap),
+    send(Figura, status, 1),
+    send(Ventana, display, Figura, point(40, 70)),
+    send(Ventana, open).
+
+cerrar_advertencia(VentanaD):-
+        send(VentanaD, destroy).
+
+%Parte base de datos
+abrir_conexion:-
+    odbc_connect('MSProlog',_,[user(root), password(''), alias(prolog), open(once)]).
+
+cerrar_conexion :-
+    odbc_disconnect('prolog').
+
+ingresar_registro(Nombre,Apellido) :-
+    abrir_conexion,
+    preparar('INSERT INTO paciente (nombre, apellidos, fecha_diagnostico) VALUES (?,?,now())', [varchar,varchar],_, [Nombre,Apellido]),
+    cerrar_conexion.
+
+obtener_conexion(Connection) :-
+    odbc_connect('MSProlog', Connection, [user(root), password(''), alias(prolog), open(once)]).
+
+preparar(SQL,Type,Row,Values) :-
+    obtener_conexion(Connection),
+    odbc_prepare(Connection, SQL, Type, Statement),
+    odbc_execute(Statement, Values, Row).
+
+consultar_registro(F) :-
+    odbc_query('prolog', 'SELECT * FROM paciente order by id DESC limit 1', F).
