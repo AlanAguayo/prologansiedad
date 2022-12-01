@@ -7,8 +7,8 @@
 resource(principal, image, image('principal.jpg')).
 resource(indiceBajo, image, image('indiceBajo.jpg')).
 resource(indiceModerado, image, image('indiceModerado.jpg')).
-resource(cesarea, image, image('cesarea.jpg')).
 resource(advertencia, image, image('advertencia.jpg')).
+resource(cesarea, image, image('cesarea.jpg')).
 
 %Respuestas posibles
 respuestaP1(0).
@@ -93,7 +93,6 @@ comenzar() :-
 
 %Ventana diagnostico del indice
 diagnostico_indice(Nombre, Apellido, VentanaD) :-
-    ingresar_registro(Nombre, Apellido),
     new(Ventana, dialog('Diagnostico indice de ansiedad')),
     send(Ventana, size, size(440,630)),
     send_list(Ventana, append, [
@@ -139,7 +138,7 @@ diagnostico_indice(Nombre, Apellido, VentanaD) :-
     send_list(P19, append, [0, 1, 2, 3]),
     send_list(P20, append, [0, 1, 2, 3]),
     send_list(P21, append, [0, 1, 2, 3]),
-    send(Ventana, append, new(BtnEnviar, button(resultados, and(message(@prolog, preguntasP1, P1?selection, P2?selection, P3?selection, P4?selection, P5?selection, P6?selection, P7?selection, P8?selection, P9?selection, P10?selection, P11?selection, P12?selection, P13?selection, P14?selection, P15?selection, P16?selection, P17?selection, P18?selection, P19?selection, P20?selection, P21?selection, Ventana))))),
+    send(Ventana, append, new(BtnEnviar, button(resultados, and(message(@prolog, preguntasP1, P1?selection, P2?selection, P3?selection, P4?selection, P5?selection, P6?selection, P7?selection, P8?selection, P9?selection, P10?selection, P11?selection, P12?selection, P13?selection, P14?selection, P15?selection, P16?selection, P17?selection, P18?selection, P19?selection, P20?selection, P21?selection, Nombre, Apellido,Ventana))))),
     send(BtnEnviar, open),
     send(VentanaD, destroy).
 
@@ -221,14 +220,17 @@ indice_severo(VentanaD) :-
     send(VentanaD, destroy).
 
 %verificacion de preguntas del indice de ansiedad
-preguntasP1(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,VentanaD):-
+preguntasP1(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,Nombre, Apellido,VentanaD):-
     P1 + P2 + P3 + P4 + P5 + P6 + P7 + P8 + P9 + P10 + P11 + P12 + P13 + P14 + P15 + P16 + P17 + P18 + P19 + P20 + P21<22,
+    ingresar_registro(Nombre, Apellido, bajo),
     indice_bajo(VentanaD).
-preguntasP1(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,VentanaD):-
+preguntasP1(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,Nombre, Apellido,VentanaD):-
     P1 + P2 + P3 + P4 + P5 + P6 + P7 + P8 + P9 + P10 + P11 + P12 + P13 + P14 + P15 + P16 + P17 + P18 + P19 + P20 + P21<36,
+    ingresar_registro(Nombre, Apellido, moderado),
     indice_moderado(VentanaD).
-preguntasP1(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,VentanaD):-
+preguntasP1(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,Nombre, Apellido,VentanaD):-
     P1 + P2 + P3 + P4 + P5 + P6 + P7 + P8 + P9 + P10 + P11 + P12 + P13 + P14 + P15 + P16 + P17 + P18 + P19 + P20 + P21>35,
+    ingresar_registro(Nombre, Apellido, severo),
     indice_severo(VentanaD).
 
 %verificacion de preguntas del transtorno de ansiedad
@@ -259,9 +261,9 @@ abrir_conexion:-
 cerrar_conexion :-
     odbc_disconnect('prolog').
 
-ingresar_registro(Nombre,Apellido) :-
+ingresar_registro(Nombre,Apellido,Indice) :-
     abrir_conexion,
-    preparar('INSERT INTO paciente (nombre, apellidos, fecha_diagnostico) VALUES (?,?,now())', [varchar,varchar],_, [Nombre,Apellido]),
+    preparar('INSERT INTO paciente (nombre, apellidos, indice, fecha_diagnostico) VALUES (?,?,?,now())', [varchar,varchar,varchar],_, [Nombre,Apellido,Indice]),
     cerrar_conexion.
 
 obtener_conexion(Connection) :-
