@@ -42,7 +42,32 @@ preguntaP1('rubor_facial',X) :- respuestaP1(X).
 preguntaP1('sudores_frios_o_calientes',X) :- respuestaP1(X).
 
 %Preguntas de la segunda parte
-preguntaP2('sudores_frios_o_calientes',X) :- respuestaP2(X).
+preguntaP2('dolor_en_el_pecho',X) :- respuestaP2(X).
+preguntaP2('miedo_a_la_muerte',X) :- respuestaP2(X).
+preguntaP2('escalofrios_o_enrojecimiento',X) :- respuestaP2(X).
+preguntaP2('temblores_o_sacudidas',X) :- respuestaP2(X).
+preguntaP2('nauseas',X) :- respuestaP2(X).
+preguntaP2('sofocos',X) :- respuestaP2(X).
+preguntaP2('sensacion_de_peligro',X) :- respuestaP2(X).
+preguntaP2('pesadillas',X) :- respuestaP2(X).
+preguntaP2('recuerdos_traumaticos',X) :- respuestaP2(X).
+preguntaP2('mareos_o_desmayos',X) :- respuestaP2(X).
+preguntaP2('falta_de_aliento_o_presion_en_la_garganta',X) :- respuestaP2(X).
+preguntaP2('entumecimiento_u_hormigueo',X) :- respuestaP2(X).
+preguntaP2('impotencia',X) :- respuestaP2(X).
+preguntaP2('malestar_estomacal',X) :- respuestaP2(X).
+preguntaP2('taquicardia_o_palpitaciones',X) :- respuestaP2(X).
+preguntaP2('postura_rigida_y_voz_baja',X) :- respuestaP2(X).
+preguntaP2('dificultad_de_contacto_visual',X) :- respuestaP2(X).
+preguntaP2('sudoracion_excesiva',X) :- respuestaP2(X).
+preguntaP2('movimientos_nerviosos',X) :- respuestaP2(X).
+preguntaP2('irritable',X) :- respuestaP2(X).
+preguntaP2('problemas_de_concentracion',X) :- respuestaP2(X).
+preguntaP2('insomnio',X) :- respuestaP2(X).
+preguntaP2('perdida_o_aumento_de_peso',X) :- respuestaP2(X).
+preguntaP2('mala_memoria',X) :- respuestaP2(X).
+preguntaP2('dolor_de_cabeza',X) :- respuestaP2(X).
+preguntaP2('cansancio',X) :- respuestaP2(X).
 
 %Ventana
 comenzar() :-
@@ -191,7 +216,7 @@ indice_moderado(VentanaD) :-
     send(VentanaD, destroy).
 
 %Ventana indice de ansiedad severas
-indice_severo(VentanaD) :-
+indice_severo(Nombre, Apellido,VentanaD) :-
     new(Ventana, dialog('Indice de ansiedad')),
     send(Ventana, size, size(370,350)),
     send(Ventana, append, new(TxtTexto, text('El indice de ansiedad es: '))),
@@ -203,19 +228,79 @@ indice_severo(VentanaD) :-
     send(TxtIndice, colour, '#0042FB'),
     send(Ventana, append, new(TxtRecomendacion, text('Contesta las siguientes preguntas para encontrar algun tipo de transtorno'))),
     send(TxtRecomendacion, alignment, center),
-    %send_list(Ventana, append, [
-    %new(P1, menu(incision_por_despredimiento_de_placenta)),
-    %new(P2, menu(no_hay_desprendimiento_de_placenta))]),
-    %send_list(P10, append, [si, no]),
-    %send_list(P11, append, [si, no]),
-    %send(Ventana,append,new(BtnTranstorno, button(tipo_incision, and(message(@prolog, tipo_incision, P10?selection,P11?selection,Ventana))))),
-    %send(BtnTranstorno, open),
-    new(Figura, figure),
-    new(Bitmap, bitmap(resource(cesarea), @on)),
-    send(Bitmap, name, 1),
-    send(Figura, display, Bitmap),
-    send(Figura, status, 1),
-    send(Ventana, display, Figura, point(10, 140)),
+    send_list(Ventana, append, [
+    new(P1, menu(dolor_en_el_pecho)),
+    new(P2, menu(miedo_a_la_muerte)),
+    new(P3, menu(escalofrios_o_enrojecimiento)),
+    new(P4, menu(temblores_o_sacudidas)),
+    new(P5, menu(nauseas)),
+    new(P6, menu(sofocos)),
+    new(P7, menu(sensacion_de_peligro)),
+    new(P8, menu(pesadillas)),
+    new(P9, menu(recuerdos_traumaticos)),
+    new(P10, menu(mareos_o_desmayos)),
+    new(P11, menu(falta_de_aliento_o_presion_en_la_garganta)),
+    new(P12, menu(entumecimiento_u_hormigueo)),
+    new(P13, menu(impotencia)),
+    new(P14, menu(malestar_estomacal)),
+    new(P15, menu(taquicardia_o_palpitaciones)),
+    new(P16, menu(postura_rigida_y_voz_baja)),
+    new(P17, menu(dificultad_de_contacto_visual)),
+    new(P18, menu(sudoracion_excesiva)),
+    new(P19, menu(movimientos_nerviosos)),
+    new(P20, menu(irritable)),
+    new(P21, menu(problemas_de_concentracion)),
+    new(P22, menu(insomnio)),
+    new(P23, menu(perdida_o_aumento_de_peso)),
+    new(P24, menu(mala_memoria)),
+    new(P25, menu(dolor_de_cabeza)),
+    new(P26, menu(cansancio))]),
+send_list(P1, append, ['SI','NO']),
+send_list(P2, append, ['SI','NO']),
+send_list(P3, append, ['SI','NO']),
+send_list(P4, append, ['SI','NO']),
+send_list(P5, append, ['SI','NO']),
+send_list(P6, append, ['SI','NO']),
+send_list(P7, append, ['SI','NO']),
+send_list(P8, append, ['SI','NO']),
+send_list(P9, append, ['SI','NO']),
+send_list(P10, append, ['SI','NO']),
+send_list(P11, append, ['SI','NO']),
+send_list(P12, append, ['SI','NO']),
+send_list(P13, append, ['SI','NO']),
+send_list(P14, append, ['SI','NO']),
+send_list(P15, append, ['SI','NO']),
+send_list(P16, append, ['SI','NO']),
+send_list(P17, append, ['SI','NO']),
+send_list(P18, append, ['SI','NO']),
+send_list(P19, append, ['SI','NO']),
+send_list(P20, append, ['SI','NO']),
+send_list(P21, append, ['SI','NO']),
+send_list(P22, append, ['SI','NO']),
+send_list(P23, append, ['SI','NO']),
+send_list(P24, append, ['SI','NO']),
+send_list(P25, append, ['SI','NO']),
+send_list(P26, append, ['SI','NO']),
+send(Ventana, append, 
+    new(_BtnEnviar, button(encontrar_transtorno, 
+        and(message(@prolog, preguntasP2, P1?selection, P2?selection, P3?selection, P4?selection, P5?selection, P6?selection, P7?selection, P8?selection, P9?selection,
+        P10?selection, P11?selection, P12?selection, P13?selection, P14?selection, P15?selection, P16?selection, P17?selection, P18?selection, P19?selection, 
+        P20?selection, P21?selection,P22?selection,P23?selection,P24?selection,P25?selection,P26?selection, Nombre, Apellido,Ventana))))),
+    send(Ventana, open),
+    send(VentanaD, destroy).
+
+diagnostico_general(Diag,VentanaD):-
+    new(Ventana, dialog('Diagnostico de ansiedad')),
+    send(Ventana, size, size(370,350)),
+    send(Ventana, append, new(TxtTexto, text('El diagnostico de ansiedad es: '))),
+    send(TxtTexto, font, bold),
+    send(TxtTexto, alignment, center),
+    send(Ventana, append, new(TxtIndice, text(Diag))),
+    send(TxtIndice, font, bold),
+    send(TxtIndice, alignment, center),
+    send(TxtIndice, colour, '#0042FB'),
+    send(Ventana, append, new(TxtRecomendacion, text('Contesta las siguientes preguntas para encontrar algun tipo de transtorno'))),
+    send(TxtRecomendacion, alignment, center),
     send(Ventana, open),
     send(VentanaD, destroy).
 
@@ -231,10 +316,274 @@ preguntasP1(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P1
 preguntasP1(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,Nombre, Apellido,VentanaD):-
     P1 + P2 + P3 + P4 + P5 + P6 + P7 + P8 + P9 + P10 + P11 + P12 + P13 + P14 + P15 + P16 + P17 + P18 + P19 + P20 + P21>35,
     ingresar_registro(Nombre, Apellido, severo),
-    indice_severo(VentanaD).
+    indice_severo(Nombre, Apellido,VentanaD).
 
 %verificacion de preguntas del transtorno de ansiedad
-
+preguntasP2(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,P22,P23,P24,P25,P26,Nombre, Apellido,VentanaD):-
+    (P1 == 'SI',
+     P2 == 'SI',
+     P3 == 'SI',
+     P4 == 'SI',
+     P5 == 'SI',
+     P6 == 'NO',
+     P7 == 'NO',
+     P8 == 'NO',
+     P9 == 'NO',
+     P10 == 'SI',
+     P11 == 'SI',
+     P12 == 'SI',
+     P13 == 'NO',
+     P14 == 'SI',
+     P15 == 'SI',
+     P16 == 'NO',
+     P17 == 'NO',
+     P18 == 'SI',
+     P19 == 'NO',
+     P20 == 'NO',
+     P21 == 'NO',
+     P22 == 'NO',
+     P23 == 'NO',
+     P24 == 'NO',
+     P25 == 'NO',
+     P26 == 'NO'
+     ),
+    ingresar_registro_diag(Nombre, Apellido,severo,agarofobia),
+    diagnostico_general('Agarofobia',VentanaD).
+preguntasP2(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,P22,P23,P24,P25,P26,Nombre, Apellido,VentanaD):-
+    (P1 == 'NO',
+     P2 == 'SI',
+     P3 == 'SI',
+     P4 == 'SI',
+     P5 == 'SI',
+     P6 == 'SI',
+     P7 == 'SI',
+     P8 == 'NO',
+     P9 == 'NO',
+     P10 == 'SI',
+     P11 == 'SI',
+     P12 == 'SI',
+     P13 == 'NO',
+     P14 == 'NO',
+     P15 == 'SI',
+     P16 == 'NO',
+     P17 == 'NO',
+     P18 == 'SI',
+     P19 == 'NO',
+     P20 == 'NO',
+     P21 == 'NO',
+     P22 == 'NO',
+     P23 == 'NO',
+     P24 == 'NO',
+     P25 == 'NO',
+     P26 == 'NO'
+     ),
+    ingresar_registro_diag(Nombre, Apellido,severo,ataques_de_panico),
+    diagnostico_general('Ataques de panico',VentanaD).
+preguntasP2(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,P22,P23,P24,P25,P26,Nombre, Apellido,VentanaD):-
+    (P1 == 'NO',
+     P2 == 'NO',
+     P3 == 'NO',
+     P4 == 'NO',
+     P5 == 'NO',
+     P6 == 'NO',
+     P7 == 'NO',
+     P8 == 'SI',
+     P9 == 'SI',
+     P10 == 'NO',
+     P11 == 'NO',
+     P12 == 'NO',
+     P13 == 'NO',
+     P14 == 'NO',
+     P15 == 'NO',
+     P16 == 'NO',
+     P17 == 'NO',
+     P18 == 'NO',
+     P19 == 'NO',
+     P20 == 'NO',
+     P21 == 'NO',
+     P22 == 'NO',
+     P23 == 'NO',
+     P24 == 'NO',
+     P25 == 'NO',
+     P26 == 'NO'
+     ),
+    ingresar_registro_diag(Nombre, Apellido,severo,estres_posttraumatico),
+    diagnostico_general('Estres posttraumatico',VentanaD).
+preguntasP2(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,P22,P23,P24,P25,P26,Nombre, Apellido,VentanaD):-
+    (P1 == 'NO',
+     P2 == 'NO',
+     P3 == 'NO',
+     P4 == 'NO',
+     P5 == 'SI',
+     P6 == 'NO',
+     P7 == 'SI',
+     P8 == 'NO',
+     P9 == 'NO',
+     P10 == 'SI',
+     P11 == 'SI',
+     P12 == 'NO',
+     P13 == 'SI',
+     P14 == 'NO',
+     P15 == 'SI',
+     P16 == 'NO',
+     P17 == 'NO',
+     P18 == 'SI',
+     P19 == 'NO',
+     P20 == 'NO',
+     P21 == 'NO',
+     P22 == 'NO',
+     P23 == 'NO',
+     P24 == 'NO',
+     P25 == 'NO',
+     P26 == 'NO'
+     ),
+    ingresar_registro_diag(Nombre, Apellido,severo,fobia_especifica),
+    diagnostico_general('Fobia especifica',VentanaD).
+preguntasP2(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,P22,P23,P24,P25,P26,Nombre, Apellido,VentanaD):-
+    (P1 == 'NO',
+     P2 == 'NO',
+     P3 == 'NO',
+     P4 == 'NO',
+     P5 == 'NO',
+     P6 == 'NO',
+     P7 == 'NO',
+     P8 == 'NO',
+     P9 == 'NO',
+     P10 == 'NO',
+     P11 == 'NO',
+     P12 == 'NO',
+     P13 == 'NO',
+     P14 == 'SI',
+     P15 == 'SI',
+     P16 == 'SI',
+     P17 == 'SI',
+     P18 == 'SI',
+     P19 == 'NO',
+     P20 == 'NO',
+     P21 == 'NO',
+     P22 == 'NO',
+     P23 == 'NO',
+     P24 == 'NO',
+     P25 == 'NO',
+     P26 == 'NO'
+     ),
+    ingresar_registro_diag(Nombre, Apellido,severo,fobia_social),
+    diagnostico_general('Fobia Social',VentanaD).
+preguntasP2(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,P22,P23,P24,P25,P26,Nombre, Apellido,VentanaD):-
+    (P1 == 'NO',
+     P2 == 'NO',
+     P3 == 'NO',
+     P4 == 'NO',
+     P5 == 'NO',
+     P6 == 'NO',
+     P7 == 'NO',
+     P8 == 'NO',
+     P9 == 'NO',
+     P10 == 'SI',
+     P11 == 'SI',
+     P12 == 'NO',
+     P13 == 'NO',
+     P14 == 'SI',
+     P15 == 'NO',
+     P16 == 'NO',
+     P17 == 'NO',
+     P18 == 'SI',
+     P19 == 'SI',
+     P20 == 'SI',
+     P21 == 'SI',
+     P22 == 'SI',
+     P23 == 'NO',
+     P24 == 'NO',
+     P25 == 'SI',
+     P26 == 'SI'
+     ),
+    ingresar_registro_diag(Nombre, Apellido,severo,ansiedad_generalizada),
+    diagnostico_general('Fobia Social',VentanaD).
+preguntasP2(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,P22,P23,P24,P25,P26,Nombre, Apellido,VentanaD):-
+    (P1 == 'NO',
+     P2 == 'NO',
+     P3 == 'NO',
+     P4 == 'NO',
+     P5 == 'NO',
+     P6 == 'NO',
+     P7 == 'NO',
+     P8 == 'NO',
+     P9 == 'NO',
+     P10 == 'NO',
+     P11 == 'NO',
+     P12 == 'NO',
+     P13 == 'NO',
+     P14 == 'SI',
+     P15 == 'NO',
+     P16 == 'SI',
+     P17 == 'NO',
+     P18 == 'NO',
+     P19 == 'NO',
+     P20 == 'NO',
+     P21 == 'SI',
+     P22 == 'SI',
+     P23 == 'SI',
+     P24 == 'SI',
+     P25 == 'SI',
+     P26 == 'SI'
+     ),
+    ingresar_registro_diag(Nombre, Apellido,severo,estres_agusto),
+    diagnostico_general('Estres agudo',VentanaD).
+preguntasP2(P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21,P22,P23,P24,P25,P26,_Nombre, _Apellido,_VentanaD):-
+    (P1 == 'NO';
+     P2 == 'NO';
+     P3 == 'NO';
+     P4 == 'NO';
+     P5 == 'NO';
+     P6 == 'NO';
+     P7 == 'NO';
+     P8 == 'NO';
+     P9 == 'NO';
+     P10 == 'NO';
+     P11 == 'NO';
+     P12 == 'NO';
+     P13 == 'NO';
+     P14 == 'NO';
+     P15 == 'NO';
+     P16 == 'NO';
+     P17 == 'NO';
+     P18 == 'NO';
+     P19 == 'NO';
+     P20 == 'NO';
+     P21 == 'NO';
+     P22 == 'NO';
+     P23 == 'NO';
+     P24 == 'NO';
+     P25 == 'NO';
+     P26 == 'NO';
+     P1 == 'SI';
+     P2 == 'SI';
+     P3 == 'SI';
+     P4 == 'SI';
+     P5 == 'SI';
+     P6 == 'SI';
+     P7 == 'SI';
+     P8 == 'SI';
+     P9 == 'SI';
+     P10 == 'SI';
+     P11 == 'SI';
+     P12 == 'SI';
+     P13 == 'SI';
+     P14 == 'SI';
+     P15 == 'SI';
+     P16 == 'SI';
+     P17 == 'SI';
+     P18 == 'SI';
+     P19 == 'SI';
+     P20 == 'SI';
+     P21 == 'SI';
+     P22 == 'SI';
+     P23 == 'SI';
+     P24 == 'SI';
+     P25 == 'SI';
+     P26 == 'SI'
+     ),
+    sin_opcion().
 %no hay opciones
 sin_opcion() :-
     new(Ventana, dialog('Ansiedad')),
@@ -264,6 +613,11 @@ cerrar_conexion :-
 ingresar_registro(Nombre,Apellido,Indice) :-
     abrir_conexion,
     preparar('INSERT INTO paciente (nombre, apellidos, indice, fecha_diagnostico) VALUES (?,?,?,now())', [varchar,varchar,varchar],_, [Nombre,Apellido,Indice]),
+    cerrar_conexion.
+
+ingresar_registro_diag(Nombre,Apellido,Indice,Diag) :-
+    abrir_conexion,
+    preparar('INSERT INTO paciente (nombre, apellidos, indice, fecha_diagnostico,transtorno) VALUES (?,?,?,now(),?)', [varchar,varchar,varchar,varchar],_, [Nombre,Apellido,Indice,Diag]),
     cerrar_conexion.
 
 obtener_conexion(Connection) :-
