@@ -219,6 +219,7 @@ indice_moderado(VentanaD) :-
 indice_severo(Nombre, Apellido,VentanaD) :-
     new(Ventana, dialog('Indice de ansiedad')),
     send(Ventana, size, size(370,350)),
+    send(Ventana, scrollbars, vertical),
     send(Ventana, append, new(TxtTexto, text('El indice de ansiedad es: '))),
     send(TxtTexto, font, bold),
     send(TxtTexto, alignment, center),
