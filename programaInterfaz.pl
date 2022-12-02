@@ -299,6 +299,10 @@ diagnostico_general(Diag,VentanaD):-
     send(TxtIndice, font, bold),
     send(TxtIndice, alignment, center),
     send(TxtIndice, colour, '#0042FB'),
+    send(Ventana, append, new(TxtConsulta, text("Consulta a tu psicologo para corroborar el diagnostico"))),
+    send(TxtConsulta, font, bold),
+    send(TxtConsulta, alignment, center),
+    send(TxtConsulta, colour, '#FF0000'),
     send(Ventana,append,new(_BtnRegresar, button(regresar, and(message(@prolog, comenzar), and(message(@prolog, cerrar_advertencia, Ventana)))))),
     send(Ventana, open),
     send(VentanaD, destroy).
