@@ -299,8 +299,7 @@ diagnostico_general(Diag,VentanaD):-
     send(TxtIndice, font, bold),
     send(TxtIndice, alignment, center),
     send(TxtIndice, colour, '#0042FB'),
-    send(Ventana, append, new(TxtRecomendacion, text('Contesta las siguientes preguntas para encontrar algun tipo de transtorno'))),
-    send(TxtRecomendacion, alignment, center),
+    send(Ventana,append,new(_BtnRegresar, button(regresar, and(message(@prolog, comenzar), and(message(@prolog, cerrar_advertencia, Ventana)))))),
     send(Ventana, open),
     send(VentanaD, destroy).
 
